@@ -28,6 +28,18 @@ namespace Homework6.Controllers
             return View(pets); 
         }
 
+        public ActionResult ViewPets(string searchString)
+        {
+            var pets = from m in db.Pets
+                       select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pets = pets.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(pets); 
+        }
         // GET: /Pets/Details/5
         public ActionResult Details(int? id)
         {
