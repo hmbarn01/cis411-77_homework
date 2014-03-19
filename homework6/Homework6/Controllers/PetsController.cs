@@ -15,9 +15,17 @@ namespace Homework6.Controllers
         private PetDBContext db = new PetDBContext();
 
         // GET: /Pets/
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Pets.ToList());
+            var pets = from m in db.Pets
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pets = pets.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(pets); 
         }
 
         // GET: /Pets/Details/5
